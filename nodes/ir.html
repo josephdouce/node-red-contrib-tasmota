@@ -111,31 +111,17 @@ checkbox, color_picker:
 
     <h3>Inputs</h3>
     <dl class="message-properties">
-        <dt>payload <span class="property-type">boolean | int | string | object</span></dt>
-        <dd>to control power state send <code>true</code>/<code>false</code> (or <code>1</code>/<code>0</code>)
-        to turn On or Off the switch, <code>"toggle"</code> to change the
-        state of the switch.</dd>
+        <dt>payload <span class="property-type">object</span></dt>#
 
-        <dd> to control color and state you can send an object ocontaining 1 or more of the below values, most recent value will be used, if you send power off followed by Dimmer or HSB that is not 0 the light will turn back on.
-            <code>{"POWER":"On/Off"}</code> power
-            <code>{"Dimmer":"0-100"}</code> 0 = Off
-            <code>{"Color":"RRGGBB"}</code> <code>CWWW</code> for 2 channels <code>RRGGBBWW</code> for 4 channels or <code>RRGGBBCWWW</code> for 5
-            <code>{"HSBColor":"0-360, 0-100, 0-100"}</code> hue,saturation,brightness string
-            <code>{"CT":"153-500"}</code> color temp
-            </dd>
+        <dd><code>{"IRsend" :{"Protocol":"<value>","Bits":<value>,"Data":<value>,"DataLSB":<value>,"Repeat":<value>}}</code></dd>
+
+        <dd><code>{"IRhvac": {"Vendor":"Mitsubishi_Heavy_152", "Power":"On","Mode":"Hot","FanSpeed":3,"Temp":22.5}}</code></dd>
     </dl>
 
     <h3>Outputs</h3>
     <dl class="message-properties">
        <dt>payload <span class="property-type">object</span></dt>
-       <dd>the node will return an object in the format <code>{"POWER":"ON","Dimmer":62,"Color":"737A9E","HSBColor":"230,27,62","Channel":[45,48,62],"CT":"153"}</code> OR <code>{"POWER":"OFF"}</code> on every state
-       change of the light.</dd>
+       <dd><code>{"IrReceived":{"Protocol":"PIONEER","Bits":64,"Data":"0xA55A50AFA55A50AF","DataLSB":"0xA55A0AF5A55A0AF5","Repeat":0}}</code></dd>
     </dl>
-    <h3>Details</h3>
-    <p>This node manage the switch functionality of the device.</p>
-    <p>To combine more functionality from the same device (switch, sensor, etc..)
-    use more than one node on the same device.</p>>
-    <p>In the Avanced tab you can customize the topic format for special cases,
-    the default values should work for a default Tasmota installation.</p>
-    <p>Input messagges are NOT forwarded to the output.</p>
+
 </script>
