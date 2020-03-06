@@ -13,6 +13,7 @@ module.exports = function (RED) {
 
             // Subscribes to state change of all the switch  stat/<device>/+
             this.MQTTSubscribe('tele', '+', (t, p) => this.onStat(t, p));
+            this.MQTTSubscribe('stat', '+', (t, p) => this.onStat(t, p));
         }
 
         onNodeInput(msg) {
@@ -22,9 +23,6 @@ module.exports = function (RED) {
             if (typeof payload === 'object') {
                 if (payload.IRsend) {
                     this.MQTTPublish('cmnd', 'IRsend', payload.IRsend.toString());
-                }
-                if (payload.IRhvac) {
-                    this.MQTTPublish('cmnd', 'IRhvac', payload.IRhvac.toString());
                 }
             }
         }
@@ -37,13 +35,14 @@ module.exports = function (RED) {
             if (!lastTopic.startsWith('RESULT')) {
                 return;
             }
+            
             var msg = {
                 payload: mqttPayload
             }
 
             msg.payload = JSON.parse(msg.payload);
 
-            if (!msg.payload.IrReceived) {
+            if (!msg.payload.IrReceived || !msg.payload.IRSend) {
                 return;
             }
 
